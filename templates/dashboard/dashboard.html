@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+<div class="welcome">
+
+    <h2>
+        Welcome Back, {{ user.first_name }} 👋
+    </h2>
+
+    <p>
+        Here's your latest health summary.
+    </p>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        <div class="dashboard-card">
+
+            <h5>Total Assessments</h5>
+
+            <h2>{{ total }}</h2>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="dashboard-card">
+
+            <h5>Latest BMI</h5>
+
+            {% if latest %}
+                <h2>{{ latest.bmi }}</h2>
+            {% else %}
+                <h2>--</h2>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="dashboard-card">
+
+            <h5>Blood Pressure</h5>
+
+            {% if latest %}
+                <h2>{{ latest.blood_pressure }}</h2>
+            {% else %}
+                <h2>--</h2>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="activity-card">
+
+    <h4>Recent Assessments</h4>
+
+    <table>
+
+        <tr>
+            <th>Date</th>
+            <th>BMI</th>
+            <th>Glucose</th>
+            <th>Blood Pressure</th>
+        </tr>
+
+        {% for record in records %}
+
+        <tr>
+
+            <td>{{ record.created_at|date:"d M Y" }}</td>
+
+            <td>{{ record.bmi }}</td>
+
+            <td>{{ record.glucose }}</td>
+
+            <td>{{ record.blood_pressure }}</td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="4">
+
+                No assessments found.
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

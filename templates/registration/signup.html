@@ -1,5 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
 
-{% for i in form %}
-{{ i.label_tag }}
-{{ i }}<br>
-{% endfor %}
+<div class="auth-box">
+
+    <h2>Create Account</h2>
+    <p>Welcome to HealthRisk AI</p>
+
+    <form action="/accounts/signup/" method="post" novalidate>
+
+        {% csrf_token %}
+
+        {% for i in form %}
+
+            {{ i.label_tag }}
+            {{ i }}
+            {{ i.errors }}
+
+            <br><br>
+
+        {% endfor %}
+
+        <button type="submit">Create Account</button>
+
+    </form>
+
+    <a href="/accounts/login/">Already have an account? Login</a>
+
+</div>
+
+</body>
+</html>

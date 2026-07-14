@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | HealthRisk AI</title>
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+</head>
+<body>
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Login to your HealthRisk AI account</p>
+
+        <form action="/accounts/login/" method="post" novalidate>
+
+            {% csrf_token %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="error">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+
+            {% for i in form %}
+                <div class="form-group">
+                    {{ i.label_tag }}
+                    {{ i }}
+                    <small class="field-error">{{ i.errors }}</small>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-login">
+                Login
+            </button>
+
+        </form>
+
+        <p class="bottom-text">
+            Don't have an account?
+            <a href="/accounts/signup/">Sign Up</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
