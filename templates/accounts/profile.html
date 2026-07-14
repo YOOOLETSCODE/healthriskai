@@ -1,11 +1,14 @@
-<h2>Sign Up</h2>
+welcome to your profile page!
+{% extends "base.html" %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create Account</button>
-</form>
+{% block content %}
 
-<a href="{% url 'accounts:login' %}">
-    Already have an account?
-</a>
+<h1>My Profile</h1>
+
+<p>Name : {{ user.first_name }} {{ user.last_name }}</p>
+
+<p>Username : {{ user.username }}</p>
+
+<p>Email : {{ user.email }}</p>
+
+{% endblock %}
