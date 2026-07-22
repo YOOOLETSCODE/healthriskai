@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+
+from patients.models import HealthRecord
 from .forms import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -34,7 +36,13 @@ def loginuser(request):
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    records = HealthRecord.objects.filter(user=request.user).order_by('-created_at')
+    latest = records.first() 
+    context = {
+        'latest': latest,
+        'total': records.count()
+    }
+    return render(request, 'accounts/profile.html', context)
 
 @login_required
 def logoutuser(request):
