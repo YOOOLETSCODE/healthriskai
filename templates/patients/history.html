@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+
+<!-- <link rel="stylesheet" href="{% static 'css/history.css' %}"> -->
+
+{% block content %}
+<div class="page-title">
+    <h2>Assessment History</h2>
+    <p>View your past assessment records below.</p>
+</div>
+<div class="history-card">
+    <table class="history-table">
+        <tr>
+            <th>Date</th>
+            <th>BMI</th>
+            <th>Glucose</th>
+        <th>Blood Pressure</th>
+        <th>Action</th>
+    </tr>
+    {% for record in records %}
+    <tr>
+        <td>{{ record.created_at|date:'Y-m-d' }}</td>
+        <td>{{ record.bmi }}</td>
+        <td>{{ record.glucose }}</td>
+        <td>{{ record.blood_pressure }}</td>
+        <td>
+            <a href="/patients/history/{{ record.id }}/" class="view-btn">View</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="5" class="text-center">No assessment records found.</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}

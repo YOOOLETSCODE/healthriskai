@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h2>Assessment Details</h2>
+
+<hr>
+
+<h3>Personal Information</h3>
+
+<p><strong>Age:</strong> {{ record.age }}</p>
+
+<p><strong>Gender:</strong> {{ record.gender }}</p>
+
+<p><strong>Height:</strong> {{ record.height }} cm</p>
+
+<p><strong>Weight:</strong> {{ record.weight }} kg</p>
+
+<p><strong>BMI:</strong> {{ record.bmi }}</p>
+
+<hr>
+
+<h3>Health Measurements</h3>
+
+<p><strong>Blood Pressure:</strong> {{ record.blood_pressure }}</p>
+
+<p><strong>Cholesterol:</strong> {{ record.cholesterol }}</p>
+
+<p><strong>Glucose:</strong> {{ record.glucose }}</p>
+
+<hr>
+
+<h3>Lifestyle</h3>
+
+<p><strong>Smoking:</strong> {{ record.smoking }}</p>
+
+<p><strong>Exercise:</strong> {{ record.exercise }}</p>
+
+<p><strong>Sleep:</strong> {{ record.sleep }} hours</p>
+
+<p><strong>Alcohol:</strong> {{ record.alcohol }}</p>
+
+<hr>
+
+<h3>Family History</h3>
+
+<p>{{ record.family_history }}</p>
+<hr>
+
+<a href="/patients/delete/{{ record.id }}/" class="delete-btn">
+
+Delete Assessment
+
+</a>
+
+{% endblock %}

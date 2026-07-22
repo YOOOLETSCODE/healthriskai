@@ -1,14 +1,79 @@
-welcome to your profile page!
 {% extends "base.html" %}
 
 {% block content %}
 
-<h1>My Profile</h1>
+<div class="profile-header">
 
-<p>Name : {{ user.first_name }} {{ user.last_name }}</p>
+    <h2>My Profile</h2>
 
-<p>Username : {{ user.username }}</p>
+    <p>Manage your account and health summary.</p>
 
-<p>Email : {{ user.email }}</p>
+</div>
+
+<div class="profile-card">
+
+    <h3>{{ user.get_full_name|default:user.username }}</h3>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <p><strong>Username:</strong> {{ user.username }}</p>
+
+</div>
+
+<div class="summary">
+
+    <div class="summary-card">
+
+        <h5>Total Assessments</h5>
+
+        <h2>{{ total }}</h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h5>Latest BMI</h5>
+
+        <h2>
+
+            {% if latest %}
+                {{ latest.bmi }}
+            {% else %}
+                --
+            {% endif %}
+
+        </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h5>Last Assessment</h5>
+
+        <h2>
+
+            {% if latest %}
+                {{ latest.created_at|date:"d M Y" }}
+            {% else %}
+                --
+            {% endif %}
+
+        </h2>
+
+    </div>
+
+</div>
+
+<div class="profile-card" style="margin-top:25px;">
+
+    <h3>Quick Actions</h3>
+
+    <a href="/dashboard/" class="action-btn">Dashboard</a>
+
+    <a href="/patients/new/" class="action-btn">New Assessment</a>
+
+    <a href="/patients/history/" class="action-btn">History</a>
+
+</div>
 
 {% endblock %}
