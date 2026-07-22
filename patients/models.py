@@ -42,5 +42,11 @@ class HealthRecord(models.Model):
     cholesterol = models.FloatField(help_text="Cholesterol in mg/dL")
     glucose = models.FloatField(help_text="Glucose in mg/dL")
     sleep = models.FloatField(help_text="hours per day")
+    diabetes_prediction= models.CharField(max_length=20, blank=True, null=True)
+    diabetes_confidence= models.FloatField(blank=True, null=True)
+    pregnancies = models.PositiveIntegerField(default=0)
+    skin_thickness = models.FloatField(default=0.0)
+    insulin = models.FloatField(default=0.0)
+    diabetes_pedigree_function = models.FloatField(default=0.0)
     def __str__(self):
         return f"Health Record for {self.user.username} - {self.created_at.date()}"

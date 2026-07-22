@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
     <link rel="stylesheet" href="{% static 'css/history.css' %}">
-    <link rel="stylesheet" href="{% static 'css/assessment.css' %}">  
+    <link rel="stylesheet" href="{% static 'css/assessment.css' %}"> 
+    <link rel="stylesheet" href="{% static 'css/ai_assistant.css' %}"> 
 </head>
 
 <body>
@@ -69,7 +70,7 @@ History
 
 </a>
 
-<a href="#"
+<a href="{% url 'dashboard:ai_assistant' %}"
 class="text-white text-decoration-none d-block mb-3">
 
 <i class="bi bi-robot"></i>

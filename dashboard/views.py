@@ -17,3 +17,10 @@ def dashboard(request):
     }
 
     return render(request, "dashboard/dashboard.html", context)
+
+@login_required
+def ai_assistant(request):
+    latest_record = HealthRecord.objects.filter(
+        user=request.user).order_by('-created_at').first()
+
+    return render(request,"dashboard/ai_assistant.html",{"record": latest_record})
