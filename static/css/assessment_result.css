@@ -1,0 +1,152 @@
+/* ===========================
+   Assessment Result Page
+=========================== */
+
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-title h2 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.page-title p {
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.ai-card {
+    max-width: 850px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.ai-header {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+    padding: 18px;
+    text-align: center;
+}
+
+.ai-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+.prediction-box {
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.label {
+    color: #6b7280;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.prediction-box h1 {
+    font-size: 2.5rem;
+    color: #2563eb;
+    margin-bottom: 25px;
+}
+
+.confidence-label {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px auto;
+}
+
+.progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,#10b981,#3b82f6);
+    border-radius:20px;
+    transition:width .6s ease;
+}
+
+.health-summary {
+    padding: 30px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.health-summary h4 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #1f2937;
+}
+
+.factor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.factor-grid div {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.factor-grid span {
+    display: block;
+    color: #6b7280;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.factor-grid strong {
+    font-size: 1.2rem;
+    color: #111827;
+}
+
+.back-btn {
+    display: inline-block;
+    margin: 30px auto 10px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.back-btn:hover {
+    background: #1d4ed8;
+}
+
+.button-area {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+
+    .factor-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prediction-box h1 {
+        font-size: 2rem;
+    }
+
+    .page-title h2 {
+        font-size: 1.6rem;
+    }
+
+}

@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ai_assistant.css' %}">
+{% endblock %}
+
 {% block content %}
 
 <div class="page-title">
     <h2>🤖 HealthRisk AI Assistant</h2>
-    <p>AI-powered health risk analysis based on your latest assessment.</p>
+    <p>AI-powered personalized health analysis based on your latest assessment.</p>
 </div>
-
 
 {% if record %}
 
@@ -17,75 +20,154 @@
         <h3>Latest Diabetes Analysis</h3>
     </div>
 
-
     <div class="prediction-box">
 
-        <p class="label">
-            Prediction Result
-        </p>
+        <p class="label">Prediction Result</p>
 
-        <h1>
-            {{ record.diabetes_prediction }}
-        </h1>
+        <h1>{{ record.diabetes_prediction }}</h1>
 
+        <p class="confidence-label">Confidence Score</p>
 
-        <p class="confidence-label">
-            Confidence Score
-        </p>
-
-
-        <div class="progress-container">
-
-            <div class="progress-bar"
-                 style="width: {{ record.diabetes_confidence }}%;">
-            </div>
-
+        <div class="progress-bar"
+             style="--confidence: {{ record.diabetes_confidence }}%;">
         </div>
 
-
-        <h3>
-            {{ record.diabetes_confidence }}%
-        </h3>
+        <h3>{{ record.diabetes_confidence }}%</h3>
 
     </div>
-
-
-    <div class="health-summary">
-
-        <h4>Assessment Factors</h4>
-
-        <div class="factor-grid">
-
-            <div>
-                <span>Age</span>
-                <strong>{{ record.age }}</strong>
-            </div>
-
-
-            <div>
-                <span>BMI</span>
-                <strong>{{ record.bmi }}</strong>
-            </div>
-
-
-            <div>
-                <span>Glucose</span>
-                <strong>{{ record.glucose }} mg/dL</strong>
-            </div>
-
-
-            <div>
-                <span>Blood Pressure</span>
-                <strong>{{ record.blood_pressure }}</strong>
-            </div>
-
-        </div>
-
-    </div>
-
 
 </div>
 
+
+<!-- AI Summary -->
+
+<div class="info-card">
+
+    <h3>🤖 AI Summary</h3>
+
+    <p>{{ summary }}</p>
+
+</div>
+
+
+<!-- Risk Level -->
+
+<div class="info-card">
+
+    <h3>📊 Overall Risk Level</h3>
+
+    <div class="risk-level">
+
+        {{ risk_level }}
+
+    </div>
+
+</div>
+
+
+<!-- Risk Factors -->
+
+<div class="info-card">
+
+    <h3>⚠ Risk Factors Identified</h3>
+
+    <ul>
+
+        {% for factor in risk_factors %}
+
+            <li>{{ factor }}</li>
+
+        {% empty %}
+
+            <li>No major risk factors detected.</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+<!-- AI Analysis -->
+
+<div class="info-card">
+
+    <h3>🩺 AI Analysis</h3>
+
+    <ul>
+
+        {% for item in analysis %}
+
+            <li>{{ item }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+<!-- Recommendations -->
+
+<div class="info-card">
+
+    <h3>💡 Personalized Recommendations</h3>
+
+    <ul>
+
+        {% for tip in recommendations %}
+
+            <li>{{ tip }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+
+<!-- Health Summary -->
+
+<div class="health-summary">
+
+    <h3>📋 Health Summary</h3>
+
+    <div class="factor-grid">
+
+        <div>
+            <span>Age</span>
+            <strong>{{ record.age }}</strong>
+        </div>
+
+        <div>
+            <span>BMI</span>
+            <strong>{{ record.bmi }}</strong>
+        </div>
+
+        <div>
+            <span>Glucose</span>
+            <strong>{{ record.glucose }} mg/dL</strong>
+        </div>
+
+        <div>
+            <span>Blood Pressure</span>
+            <strong>{{ record.blood_pressure }}</strong>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Disclaimer -->
+
+<div class="disclaimer">
+
+    <h4>⚠ Medical Disclaimer</h4>
+
+    <p>{{ disclaimer }}</p>
+
+</div>
 
 {% else %}
 
@@ -99,8 +181,6 @@
 
 </div>
 
-
 {% endif %}
-
 
 {% endblock %}

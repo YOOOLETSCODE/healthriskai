@@ -48,10 +48,17 @@
 <p>{{ record.family_history }}</p>
 <hr>
 
-<a href="/patients/delete/{{ record.id }}/" class="delete-btn">
+<hr>
 
-Delete Assessment
-
+<a href="{% url 'patients:assessment_result' record.id %}"
+   class="btn btn-success">
+    View AI Result
 </a>
+
+<a href="/patients/delete/{{ record.id }}/"
+   class="btn btn-danger">
+    Delete Assessment
+</a>
+
 
 {% endblock %}

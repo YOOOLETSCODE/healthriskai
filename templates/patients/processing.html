@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/processing.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="processing-card">
+
+    <div class="spinner"></div>
+
+    <h2>🤖 HealthRisk AI</h2>
+
+    <h3>Analyzing your health assessment...</h3>
+
+    <ul id="steps">
+        <li class="step">⏳ Reading your health information...</li>
+        <li class="step">⏳ Calculating BMI...</li>
+        <li class="step">⏳ Running AI prediction model...</li>
+        <li class="step">⏳ Identifying risk factors...</li>
+        <li class="step">⏳ Generating personalized recommendations...</li>
+    </ul>
+
+</div>
+
+<script>
+
+const steps = document.querySelectorAll(".step");
+
+let index = 0;
+
+function nextStep(){
+
+    if(index > 0){
+        steps[index-1].innerHTML =
+        "✅ " + steps[index-1].innerHTML.substring(2);
+    }
+
+    if(index < steps.length){
+
+        steps[index].style.color="#2563eb";
+
+        index++;
+
+        setTimeout(nextStep,800);
+
+    }
+    else{
+
+        setTimeout(function(){
+
+            window.location.href="{{ redirect_url }}";
+
+        },1000);
+
+    }
+
+}
+
+setTimeout(nextStep,600);
+
+</script>
+
+{% endblock %}
