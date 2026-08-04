@@ -1,0 +1,91 @@
+.processing-card{
+
+    max-width:700px;
+
+    margin:80px auto;
+
+    background:white;
+
+    padding:50px;
+
+    border-radius:18px;
+
+    text-align:center;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.spinner{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    border:8px solid #e5e7eb;
+
+    border-top:8px solid #2563eb;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+.processing-card h2{
+
+    margin-top:30px;
+
+    color:#2563eb;
+
+}
+
+.processing-card h3{
+
+    color:#4b5563;
+
+    margin-bottom:30px;
+
+}
+
+#steps{
+
+    list-style:none;
+
+    padding:0;
+
+    text-align:left;
+
+    max-width:500px;
+
+    margin:auto;
+
+}
+
+#steps li{
+
+    padding:12px;
+
+    font-size:18px;
+
+    color:#6b7280;
+
+}

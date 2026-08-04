@@ -1,2 +1,5 @@
 myvenv
 /myvenv
+.ipynb_checkpoints/
+db.sqlite3
+.DS_Store
