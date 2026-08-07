@@ -13,9 +13,9 @@
 
 <p><strong>Gender:</strong> {{ record.gender }}</p>
 
-<p><strong>Height:</strong> {{ record.height }} cm</p>
+<p><strong>HbA1c:</strong> {{ record.hbA1c_level }}</p>
 
-<p><strong>Weight:</strong> {{ record.weight }} kg</p>
+<p><strong>Blood Glucose:</strong> {{ record.blood_glucose_level }}</p>
 
 <p><strong>BMI:</strong> {{ record.bmi }}</p>
 
@@ -23,30 +23,30 @@
 
 <h3>Health Measurements</h3>
 
-<p><strong>Blood Pressure:</strong> {{ record.blood_pressure }}</p>
+<p><strong>Hypertension:</strong> {{ record.hypertension|yesno:"Yes,No" }}</p>
 
-<p><strong>Cholesterol:</strong> {{ record.cholesterol }}</p>
+<p><strong>Heart Disease:</strong> {{ record.heart_disease|yesno:"Yes,No" }}</p>
 
-<p><strong>Glucose:</strong> {{ record.glucose }}</p>
+<!-- <p><strong>Glucose:</strong> {{ record.glucos }}</p> -->
 
 <hr>
 
 <h3>Lifestyle</h3>
 
-<p><strong>Smoking:</strong> {{ record.smoking }}</p>
+<p><strong>Smoking History:</strong> {{ record.smoking_history }}</p>
 
-<p><strong>Exercise:</strong> {{ record.exercise }}</p>
+<!-- <p><strong>Exercise:</strong> {{ record.exercise }}</p> -->
 
-<p><strong>Sleep:</strong> {{ record.sleep }} hours</p>
+<!-- <p><strong>Sleep:</strong> {{ record.sleep }} hours</p> -->
 
-<p><strong>Alcohol:</strong> {{ record.alcohol }}</p>
+<!-- <p><strong>Alcohol:</strong> {{ record.alcohol }}</p> -->
 
-<hr>
+<!-- <hr>
 
 <h3>Family History</h3>
 
 <p>{{ record.family_history }}</p>
-<hr>
+<hr> -->
 
 <hr>
 

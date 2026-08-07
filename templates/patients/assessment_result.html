@@ -7,71 +7,95 @@
 
 {% block content %}
 
-<div class="page-title">
-    <h2>🤖 Assessment AI Result</h2>
-    <p>AI prediction for this health assessment.</p>
+<div class="ai-header">
+    <h3>Diabetes Risk Analysis</h3>
 </div>
 
-<div class="ai-card">
+<div class="prediction-box">
 
-    <div class="ai-header">
-        <h3>Diabetes Risk Analysis</h3>
+    <p class="label">Prediction Result</p>
+
+    <h1>{{ record.diabetes_prediction }}</h1>
+
+    <p class="confidence-label">Confidence Score</p>
+
+    <div class="progress-container">
+        <div class="progress-fill"
+             style="width: {{ record.diabetes_confidence }}%;">
+        </div>
     </div>
 
-    <div class="prediction-box">
+    <h3>{{ record.diabetes_confidence }}%</h3>
 
-        <p class="label">Prediction Result</p>
+    <p class="risk-level">
+        Risk Level:
+        <strong>{{ record.risk_level }}</strong>
+    </p>
 
-        <h1>{{ record.diabetes_prediction }}</h1>
+</div>
 
-        <p class="confidence-label">Confidence Score</p>
+<div class="health-summary">
 
-        <div class="progress-container">
-            <div class="progress-fill"
-                 style="width: {{ record.diabetes_confidence }}%;">
-            </div>
+    <h4>Assessment Factors</h4>
+
+    <div class="factor-grid">
+
+        <div class="factor-card">
+            <span>Age</span>
+            <strong>{{ record.age }} Years</strong>
         </div>
 
-        <h3>{{ record.diabetes_confidence }}%</h3>
+        <div class="factor-card">
+            <span>BMI</span>
+            <strong>{{ record.bmi }}</strong>
+            <small>{{ record.bmi_status }}</small>
+        </div>
 
-    </div>
+        <div class="factor-card">
+            <span>Blood Glucose Level</span>
+            <strong>{{ record.blood_glucose_level }} mg/dL</strong>
+            <small>{{ record.glucose_status }}</small>
+        </div>
 
-    <div class="health-summary">
+        <div class="factor-card">
+            <span>HbA1c Level</span>
+            <strong>{{ record.hbA1c_level }}%</strong>
+            <small>{{ record.hba1c_status }}</small>
+        </div>
 
-        <h4>Assessment Factors</h4>
+        <div class="factor-card">
+            <span>Hypertension</span>
+            <strong>{{ record.hypertension_status }}</strong>
+        </div>
 
-        <div class="factor-grid">
+        <div class="factor-card">
+            <span>Heart Disease</span>
+            <strong>{{ record.heart_disease_status }}</strong>
+        </div>
 
-            <div>
-                <span>Age</span>
-                <strong>{{ record.age }}</strong>
-            </div>
+        <div class="factor-card">
+            <span>Smoking History</span>
+            <strong>{{ record.smoking_history }}</strong>
+        </div>
 
-            <div>
-                <span>BMI</span>
-                <strong>{{ record.bmi }}</strong>
-            </div>
+        <div class="factor-card">
+            <span>Gender</span>
+            <strong>{{ record.gender }}</strong>
+        </div>
 
-            <div>
-                <span>Glucose</span>
-                <strong>{{ record.glucose }} mg/dL</strong>
-            </div>
-
-            <div>
-                <span>Blood Pressure</span>
-                <strong>{{ record.blood_pressure }}</strong>
-            </div>
-
+        <div class="factor-card">
+            <span>Race</span>
+            <strong>{{ record.race }}</strong>
         </div>
 
     </div>
 
-    <div class="button-area">
-        <a href="{% url 'patients:history_detail' record.id %}" class="back-btn">
-            ← Back to Assessment Details
-        </a>
-    </div>
+</div>
 
+<div class="button-area">
+    <a href="{% url 'patients:history_detail' record.id %}" class="back-btn">
+        ← Back to Assessment Details
+    </a>
 </div>
 
 {% endblock %}

@@ -7,39 +7,29 @@
 
 {% block content %}
 
-<div class="page-title">
-    <h2>🤖 HealthRisk AI Assistant</h2>
-    <p>AI-powered personalized health analysis based on your latest assessment.</p>
-</div>
-
 {% if record %}
 
-<div class="ai-card">
-
-    <div class="ai-header">
-        <h3>Latest Diabetes Analysis</h3>
-    </div>
-
-    <div class="prediction-box">
-
-        <p class="label">Prediction Result</p>
-
-        <h1>{{ record.diabetes_prediction }}</h1>
-
-        <p class="confidence-label">Confidence Score</p>
-
-        <div class="progress-bar"
-             style="--confidence: {{ record.diabetes_confidence }}%;">
-        </div>
-
-        <h3>{{ record.diabetes_confidence }}%</h3>
-
-    </div>
-
+<div class="ai-header">
+    <h3>Latest Diabetes Analysis</h3>
 </div>
 
+<div class="prediction-box">
 
-<!-- AI Summary -->
+    <p class="label">Prediction Result</p>
+
+    <h1>{{ record.diabetes_prediction }}</h1>
+
+    <p class="confidence-label">Confidence Score</p>
+
+    <div class="progress-container">
+        <div class="progress-fill"
+             style="width: {{ record.diabetes_confidence }}%;">
+        </div>
+    </div>
+
+    <h3>{{ record.diabetes_confidence }}%</h3>
+
+</div>
 
 <div class="info-card">
 
@@ -48,9 +38,6 @@
     <p>{{ summary }}</p>
 
 </div>
-
-
-<!-- Risk Level -->
 
 <div class="info-card">
 
@@ -63,9 +50,6 @@
     </div>
 
 </div>
-
-
-<!-- Risk Factors -->
 
 <div class="info-card">
 
@@ -87,9 +71,6 @@
 
 </div>
 
-
-<!-- AI Analysis -->
-
 <div class="info-card">
 
     <h3>🩺 AI Analysis</h3>
@@ -105,9 +86,6 @@
     </ul>
 
 </div>
-
-
-<!-- Recommendations -->
 
 <div class="info-card">
 
@@ -125,41 +103,63 @@
 
 </div>
 
-
-<!-- Health Summary -->
-
 <div class="health-summary">
 
     <h3>📋 Health Summary</h3>
 
     <div class="factor-grid">
 
-        <div>
+        <div class="factor-card">
             <span>Age</span>
-            <strong>{{ record.age }}</strong>
+            <strong>{{ record.age }} Years</strong>
         </div>
 
-        <div>
+        <div class="factor-card">
             <span>BMI</span>
             <strong>{{ record.bmi }}</strong>
+            <small>{{ record.bmi_status }}</small>
         </div>
 
-        <div>
-            <span>Glucose</span>
-            <strong>{{ record.glucose }} mg/dL</strong>
+        <div class="factor-card">
+            <span>Blood Glucose</span>
+            <strong>{{ record.blood_glucose_level }} mg/dL</strong>
+            <small>{{ record.glucose_status }}</small>
         </div>
 
-        <div>
-            <span>Blood Pressure</span>
-            <strong>{{ record.blood_pressure }}</strong>
+        <div class="factor-card">
+            <span>HbA1c Level</span>
+            <strong>{{ record.hbA1c_level }}%</strong>
+            <small>{{ record.hba1c_status }}</small>
+        </div>
+
+        <div class="factor-card">
+            <span>Hypertension</span>
+            <strong>{{ record.hypertension_status }}</strong>
+        </div>
+
+        <div class="factor-card">
+            <span>Heart Disease</span>
+            <strong>{{ record.heart_disease_status }}</strong>
+        </div>
+
+        <div class="factor-card">
+            <span>Smoking History</span>
+            <strong>{{ record.smoking_history }}</strong>
+        </div>
+
+        <div class="factor-card">
+            <span>Gender</span>
+            <strong>{{ record.gender }}</strong>
+        </div>
+
+        <div class="factor-card">
+            <span>Race</span>
+            <strong>{{ record.race }}</strong>
         </div>
 
     </div>
 
 </div>
-
-
-<!-- Disclaimer -->
 
 <div class="disclaimer">
 
@@ -171,7 +171,7 @@
 
 {% else %}
 
-<div class="ai-card">
+<div class="info-card">
 
     <h3>No Assessment Found</h3>
 

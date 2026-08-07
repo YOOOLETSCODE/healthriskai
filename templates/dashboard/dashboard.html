@@ -3,64 +3,42 @@
 
 {% block content %}
 
-<!-- <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> -->
-
 <div class="welcome">
-
-    <h2>
-        Welcome Back, {{ user.first_name }} 👋
-    </h2>
-
-    <p>
-        Here's your latest health summary.
-    </p>
-
+    <h2>Welcome Back, {{ user.first_name }} 👋</h2>
+    <p>Here's your latest health summary.</p>
 </div>
 
 <div class="row">
 
     <div class="col-md-4">
-
         <div class="dashboard-card">
-
             <h5>Total Assessments</h5>
-
             <h2>{{ total }}</h2>
-
         </div>
-
     </div>
 
     <div class="col-md-4">
-
         <div class="dashboard-card">
-
             <h5>Latest BMI</h5>
-
             {% if latest %}
                 <h2>{{ latest.bmi }}</h2>
+                <small>{{ latest.bmi_status }}</small>
             {% else %}
                 <h2>--</h2>
             {% endif %}
-
         </div>
-
     </div>
 
     <div class="col-md-4">
-
         <div class="dashboard-card">
-
-            <h5>Blood Pressure</h5>
-
+            <h5>Latest Blood Glucose</h5>
             {% if latest %}
-                <h2>{{ latest.blood_pressure }}</h2>
+                <h2>{{ latest.blood_glucose_level }} mg/dL</h2>
+                <small>{{ latest.glucose_status }}</small>
             {% else %}
                 <h2>--</h2>
             {% endif %}
-
         </div>
-
     </div>
 
 </div>
@@ -71,40 +49,59 @@
 
     <table>
 
-        <tr>
-            <th>Date</th>
-            <th>BMI</th>
-            <th>Glucose</th>
-            <th>Blood Pressure</th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>BMI</th>
+                <th>Blood Glucose</th>
+                <th>HbA1c</th>
+                <th>Prediction</th>
+            </tr>
+        </thead>
 
-        {% for record in records %}
+        <tbody>
 
-        <tr>
+            {% for record in records %}
 
-            <td>{{ record.created_at|date:"d M Y" }}</td>
+            <tr>
 
-            <td>{{ record.bmi }}</td>
+                <td>{{ record.created_at|date:"d M Y" }}</td>
 
-            <td>{{ record.glucose }}</td>
+                <td>
+                    {{ record.bmi }}
+                    <br>
+                    <small>{{ record.bmi_status }}</small>
+                </td>
 
-            <td>{{ record.blood_pressure }}</td>
+                <td>
+                    {{ record.blood_glucose_level }} mg/dL
+                    <br>
+                    <small>{{ record.glucose_status }}</small>
+                </td>
 
-        </tr>
+                <td>
+                    {{ record.hbA1c_level }}%
+                    <br>
+                    <small>{{ record.hba1c_status }}</small>
+                </td>
 
-        {% empty %}
+                <td>
+                    {{ record.diabetes_prediction }}
+                </td>
 
-        <tr>
+            </tr>
 
-            <td colspan="4">
+            {% empty %}
 
-                No assessments found.
+            <tr>
+                <td colspan="5" style="text-align:center;">
+                    No assessments found.
+                </td>
+            </tr>
 
-            </td>
+            {% endfor %}
 
-        </tr>
-
-        {% endfor %}
+        </tbody>
 
     </table>
 

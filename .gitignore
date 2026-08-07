@@ -1,5 +1,30 @@
-myvenv
-/myvenv
-.ipynb_checkpoints/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+myvenv/
+venv/
+env/
+
+# Django
 db.sqlite3
+
+# VS Code
+.vscode/
+
+# macOS
 .DS_Store
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Model files (optional if too large)
+*.pkl
+
+# Logs
+*.log
+
+# Environment variables
+.env

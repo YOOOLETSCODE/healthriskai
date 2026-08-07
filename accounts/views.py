@@ -7,6 +7,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Create your views here.
 def signup(request):
@@ -22,17 +25,41 @@ def signup(request):
     return render(request,'registration/signup.html',{'form':user_detail})
 
 def loginuser(request):
-    user_detail = AuthenticationForm()
-    if request.method == 'POST':
-        uname = request.POST.get('username')
-        upass = request.POST.get('password')
-        val = authenticate(request, username=uname, password=upass)
-        if val != None:
-            login(request, val)
-            return redirect('/dashboard/')
-        else:
-            messages.error(request, "Invalid username or password")
-    return render(request, 'registration/login.html', {'form': user_detail})
+
+    if request.method == "POST":
+
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+
+        try:
+            user = User.objects.get(email=email)
+
+        except User.DoesNotExist:
+            user = None
+
+        if user is not None:
+
+            authenticated_user = authenticate(
+                request,
+                username=user.username,
+                password=password,
+            )
+
+            if authenticated_user:
+
+                login(request, authenticated_user)
+
+                return redirect("/dashboard/")
+
+        messages.error(
+            request,
+            "Invalid email or password."
+        )
+
+    return render(
+        request,
+        "registration/login.html"
+    )
 
 @login_required
 def profile(request):
