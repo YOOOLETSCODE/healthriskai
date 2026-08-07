@@ -17,354 +17,289 @@
     color:#6b7280;
 }
 
-
-/* Main Card */
+/* ==========================
+   AI Card
+========================== */
 
 .ai-card{
-
     max-width:900px;
-
     margin:30px auto;
-
     background:#fff;
-
     border-radius:18px;
-
     overflow:hidden;
-
     box-shadow:0 10px 30px rgba(0,0,0,.08);
-
+    transition:.3s;
 }
 
+.ai-card:hover{
+    transform:translateY(-4px);
+}
 
-/* Header */
+/* ==========================
+   Header
+========================== */
 
 .ai-header{
-
     background:linear-gradient(135deg,#2563eb,#3b82f6);
-
-    color:white;
-
+    color:#fff;
     text-align:center;
-
-    padding:20px;
-
+    padding:22px;
+    border-radius:16px 16px 0 0;
 }
 
 .ai-header h3{
-
     margin:0;
-
+    font-size:1.5rem;
 }
 
-
-/* Prediction */
+/* ==========================
+   Prediction Box
+========================== */
 
 .prediction-box{
-
+    max-width:900px;
+    margin:25px auto;
+    background:#fff;
     padding:35px;
-
+    border-radius:15px;
     text-align:center;
-
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
 }
 
-.label{
-
+.label,
+.confidence-label{
     color:#6b7280;
-
     font-weight:600;
-
 }
 
 .prediction-box h1{
-
-    font-size:2.7rem;
-
+    font-size:2.8rem;
     color:#2563eb;
-
-    margin:20px 0;
-
+    margin:18px 0;
 }
 
-.confidence-label{
-
-    margin-top:20px;
-
-    font-weight:600;
-
+.prediction-box h3{
+    margin-top:15px;
+    color:#111827;
 }
 
+/* ==========================
+   Progress Bar
+========================== */
 
-/* Progress */
-
-.progress-bar{
-
+.progress-container{
     width:100%;
-
     height:14px;
-
-    border-radius:20px;
-
     background:#e5e7eb;
-
-    margin:20px auto;
-
+    border-radius:30px;
     overflow:hidden;
-
-    position:relative;
-
+    margin:18px 0;
 }
 
-.progress-bar::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:0;
-
-    top:0;
-
-    width:var(--confidence);
-
+.progress-fill{
     height:100%;
-
-    border-radius:20px;
-
-    background:linear-gradient(
-        90deg,
-        #10b981,
-        #2563eb
-    );
-
+    background:linear-gradient(90deg,#10b981,#2563eb);
+    border-radius:30px;
+    transition:width .5s ease;
 }
 
+/* ==========================
+   Risk Level
+========================== */
 
-/* Info Cards */
+.risk-level{
+    margin-top:20px;
+    font-size:18px;
+    color:#374151;
+}
+
+.risk-level strong{
+    color:#2563eb;
+}
+
+/* ==========================
+   Health Summary
+========================== */
+
+.health-summary{
+    max-width:900px;
+    margin:25px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.health-summary:hover{
+    transform:translateY(-3px);
+}
+
+.health-summary h4{
+    margin-bottom:25px;
+    text-align:center;
+    color:#111827;
+}
+
+/* ==========================
+   Grid
+========================== */
+
+.factor-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+/* ==========================
+   Factor Cards
+========================== */
+
+.factor-card{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:22px;
+    text-align:center;
+    transition:.3s;
+}
+
+.factor-card:hover{
+    border-color:#2563eb;
+    transform:translateY(-3px);
+}
+
+.factor-card span{
+    display:block;
+    font-size:14px;
+    color:#6b7280;
+    margin-bottom:10px;
+}
+
+.factor-card strong{
+    display:block;
+    font-size:22px;
+    color:#111827;
+    margin-bottom:6px;
+}
+
+.factor-card small{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:#2563eb;
+}
+
+/* ==========================
+   Info Cards
+========================== */
 
 .info-card{
-
     max-width:900px;
-
     margin:25px auto;
-
-    background:white;
-
+    background:#fff;
     padding:25px;
-
     border-radius:15px;
-
     box-shadow:0 8px 20px rgba(0,0,0,.06);
+    transition:.3s;
+}
 
+.info-card:hover{
+    transform:translateY(-3px);
 }
 
 .info-card h3{
-
-    color:#1f2937;
-
+    color:#111827;
     margin-bottom:15px;
-
 }
 
 .info-card p{
-
     color:#4b5563;
-
     line-height:1.7;
-
 }
 
-
-/* Lists */
-
 .info-card ul{
-
     margin:0;
-
     padding-left:20px;
-
 }
 
 .info-card li{
-
-    margin-bottom:12px;
-
+    margin-bottom:10px;
     color:#374151;
-
     line-height:1.6;
-
 }
 
-
-/* Risk Level */
-
-.risk-level{
-
-    display:inline-block;
-
-    padding:12px 24px;
-
-    border-radius:30px;
-
-    background:#eff6ff;
-
-    color:#2563eb;
-
-    font-size:20px;
-
-    font-weight:bold;
-
-}
-
-
-/* Health Summary */
-
-.health-summary{
-
-    max-width:900px;
-
-    margin:25px auto;
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:15px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.06);
-
-}
-
-.health-summary h3{
-
-    text-align:center;
-
-    margin-bottom:25px;
-
-}
-
-
-/* Grid */
-
-.factor-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:20px;
-
-}
-
-.factor-grid div{
-
-    background:#f8fafc;
-
-    border:1px solid #e5e7eb;
-
-    border-radius:12px;
-
-    padding:20px;
-
-    text-align:center;
-
-}
-
-.factor-grid span{
-
-    display:block;
-
-    color:#6b7280;
-
-    margin-bottom:8px;
-
-}
-
-.factor-grid strong{
-
-    font-size:1.3rem;
-
-    color:#111827;
-
-}
-
-
-/* Disclaimer */
+/* ==========================
+   Disclaimer
+========================== */
 
 .disclaimer{
-
     max-width:900px;
-
     margin:30px auto;
-
     background:#fff8e1;
-
     border-left:6px solid #f59e0b;
-
     padding:20px;
-
     border-radius:12px;
-
 }
 
 .disclaimer h4{
-
     margin-top:0;
-
     color:#92400e;
-
 }
 
 .disclaimer p{
-
     color:#78350f;
-
-    line-height:1.6;
-
+    line-height:1.7;
 }
 
+/* ==========================
+   Button
+========================== */
 
-/* Hover */
+.button-area{
+    text-align:center;
+    margin:35px 0;
+}
 
-.info-card:hover,
-
-.health-summary:hover,
-
-.ai-card:hover{
-
-    transform:translateY(-4px);
-
+.back-btn{
+    display:inline-block;
+    padding:12px 24px;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:600;
     transition:.3s;
-
 }
 
-
-/* Mobile */
-
-@media(max-width:768px){
-
-.factor-grid{
-
-grid-template-columns:1fr;
-
+.back-btn:hover{
+    background:#1d4ed8;
 }
 
-.prediction-box h1{
+/* ==========================
+   Mobile
+========================== */
 
-font-size:2rem;
+@media (max-width:768px){
 
-}
+    .factor-grid{
+        grid-template-columns:1fr;
+    }
 
-.page-title h2{
+    .prediction-box{
+        padding:25px;
+    }
 
-font-size:1.6rem;
+    .prediction-box h1{
+        font-size:2rem;
+    }
 
-}
+    .page-title h2{
+        font-size:1.6rem;
+    }
 
-.info-card{
-
-padding:20px;
-
-}
-
+    .health-summary,
+    .info-card{
+        padding:20px;
+    }
 }

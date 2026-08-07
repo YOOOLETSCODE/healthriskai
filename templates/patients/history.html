@@ -14,15 +14,15 @@
             <th>Date</th>
             <th>BMI</th>
             <th>Glucose</th>
-        <th>Blood Pressure</th>
-        <th>Action</th>
-    </tr>
-    {% for record in records %}
-    <tr>
+            <th>Hypertension</th>
+            <th>Action</th>
+        </tr>
+        {% for record in records %}
+        <tr>
         <td>{{ record.created_at|date:'Y-m-d' }}</td>
         <td>{{ record.bmi }}</td>
-        <td>{{ record.glucose }}</td>
-        <td>{{ record.blood_pressure }}</td>
+        <td>{{ record.blood_glucose_level }}</td>
+        <td>{{ record.hypertension|yesno:"Yes,No" }}</td>
         <td>
             <a href="/patients/history/{{ record.id }}/" class="view-btn">View</a>
         </td>

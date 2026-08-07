@@ -71,3 +71,29 @@ table td{
 table tr:hover{
     background:#f2f7ff;
 }
+.row{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.col-md-4{
+    flex:1;
+    min-width:250px;
+}
+
+.dashboard-card small{
+    display:block;
+    margin-top:8px;
+    color:#2563eb;
+    font-weight:600;
+}
+
+.activity-card table td small{
+    display:block;
+    margin-top:4px;
+    color:#2563eb;
+    font-size:12px;
+    font-weight:600;
+}

@@ -1,40 +1,67 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+
+    <title>Create Account | HealthRisk AI</title>
+
     <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
 </head>
+
 <body>
 
-<div class="auth-box">
+<div class="auth-container">
 
-    <h2>Create Account</h2>
-    <p>Welcome to HealthRisk AI</p>
+    <div class="auth-card">
 
-    <form action="/accounts/signup/" method="post" novalidate>
+        <h2>Create Account</h2>
 
-        {% csrf_token %}
+        <p>Create your HealthRisk AI account.</p>
 
-        {% for i in form %}
+        <form method="post" novalidate>
 
-            {{ i.label_tag }}
-            {{ i }}
-            {{ i.errors }}
+            {% csrf_token %}
 
-            <br><br>
+            {% for field in form %}
 
-        {% endfor %}
+                <div class="form-group">
 
-        <button type="submit">Create Account</button>
+                    {{ field.label_tag }}
 
-    </form>
+                    {{ field }}
 
-    <a href="/accounts/login/">Already have an account? Login</a>
+                    {% for error in field.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="login-link">
+            Already have an account?
+            <a href="{% url 'accounts:login' %}">
+                Login
+            </a>
+        </p>
+
+    </div>
 
 </div>
 
 </body>
+
 </html>

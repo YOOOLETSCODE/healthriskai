@@ -4,16 +4,24 @@ from .models import HealthRecord
 
 class HealthRecordForm(forms.ModelForm):
 
-    pregnancies = forms.IntegerField(
-        required=False,
-        min_value=0,
-        initial=0,
-        widget=forms.NumberInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Number of pregnancies"
-            }
-        )
+    YES_NO_CHOICES = [
+        ("", "-- Select --"),
+        ("True", "Yes"),
+        ("False", "No"),
+    ]
+
+    hypertension = forms.TypedChoiceField(
+        choices=YES_NO_CHOICES,
+        coerce=lambda x: x == "True",
+        empty_value=None,
+        widget=forms.Select(attrs={"class": "form-select"}),
+    )
+
+    heart_disease = forms.TypedChoiceField(
+        choices=YES_NO_CHOICES,
+        coerce=lambda x: x == "True",
+        empty_value=None,
+        widget=forms.Select(attrs={"class": "form-select"}),
     )
 
     class Meta:
@@ -23,28 +31,12 @@ class HealthRecordForm(forms.ModelForm):
         exclude = [
             "user",
             "created_at",
-            "bmi",
             "diabetes_prediction",
             "diabetes_confidence",
             "diabetic_probability",
             "non_diabetic_probability",
         ]
 
-        fields = [
-            "age",
-            "gender",
-            "height",
-            "weight",
-            "blood_pressure",
-            "cholesterol",
-            "glucose",
-            "smoking",
-            "exercise",
-            "sleep",
-            "alcohol",
-            "family_history",
-            "pregnancies",
-        ]
 
         widgets = {
 
@@ -55,164 +47,232 @@ class HealthRecordForm(forms.ModelForm):
                 }
             ),
 
+
             "gender": forms.Select(
                 attrs={
                     "class": "form-select"
                 }
             ),
 
-            "height": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Height in cm"
-                }
-            ),
 
-            "weight": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Weight in kg"
-                }
-            ),
-
-            "blood_pressure": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Systolic BP (Example: 120)"
-                }
-            ),
-
-            "cholesterol": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Cholesterol mg/dL"
-                }
-            ),
-
-            "glucose": forms.NumberInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Glucose mg/dL"
-                }
-            ),
-
-            "smoking": forms.Select(
+            "race": forms.Select(
                 attrs={
                     "class": "form-select"
                 }
             ),
 
-            "exercise": forms.Select(
-                attrs={
-                    "class": "form-select"
-                }
-            ),
 
-            "sleep": forms.NumberInput(
+
+            "bmi": forms.NumberInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Hours of sleep"
+                    "placeholder": "BMI"
                 }
             ),
 
-            "alcohol": forms.Select(
+
+            "hbA1c_level": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "HbA1c Level"
+                }
+            ),
+
+
+            "blood_glucose_level": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Blood Glucose Level"
+                }
+            ),
+
+
+            "smoking_history": forms.Select(
                 attrs={
                     "class": "form-select"
                 }
             ),
 
-            "family_history": forms.Select(
-                attrs={
-                    "class": "form-select"
-                }
-            ),
         }
 
 
-    def clean(self):
 
-        cleaned_data = super().clean()
+    # -----------------------------------
+    # Add -- Select -- placeholder
+    # -----------------------------------
 
-        gender = cleaned_data.get("gender")
-        pregnancies = cleaned_data.get("pregnancies")
+    def __init__(self, *args, **kwargs):
 
-        if gender == "Male":
-            cleaned_data["pregnancies"] = 0
+        super().__init__(*args, **kwargs)
 
-        elif gender == "Female" and pregnancies is None:
-            self.add_error(
-                "pregnancies",
-                "Please enter number of pregnancies."
+
+        dropdown_fields = [
+            "gender",
+            "race",
+            "hypertension",
+            "heart_disease",
+            "smoking_history",
+        ]
+
+
+        for field_name in dropdown_fields:
+
+            self.fields[field_name].choices = [
+                ("", "-- Select --")
+            ] + list(
+                self.fields[field_name].choices
             )
 
-        return cleaned_data
 
+            self.fields[field_name].required = True
+
+
+
+    # -----------------------------------
+    # Age validation
+    # -----------------------------------
 
     def clean_age(self):
 
         age = self.cleaned_data.get("age")
 
+
         if age is None:
+
             raise forms.ValidationError(
                 "Age is required."
             )
 
+
         if age <= 0:
+
             raise forms.ValidationError(
                 "Enter a valid age."
             )
 
+
         return age
 
 
-    def clean_height(self):
 
-        height = self.cleaned_data.get("height")
+    # -----------------------------------
+    # BMI validation
+    # -----------------------------------
 
-        if height is None or height <= 0:
+    def clean_bmi(self):
+
+        bmi = self.cleaned_data.get("bmi")
+
+
+        if bmi is None:
+
             raise forms.ValidationError(
-                "Enter a valid height."
+                "BMI is required."
             )
 
-        return height
 
+        if bmi <= 0:
 
-    def clean_weight(self):
-
-        weight = self.cleaned_data.get("weight")
-
-        if weight is None or weight <= 0:
             raise forms.ValidationError(
-                "Enter a valid weight."
+                "Enter a valid BMI value."
             )
 
-        return weight
+
+        return bmi
 
 
-    def clean_glucose(self):
 
-        glucose = self.cleaned_data.get("glucose")
+    # -----------------------------------
+    # HbA1c validation
+    # -----------------------------------
 
-        if glucose is None or glucose <= 0:
+    def clean_hbA1c_level(self):
+
+        value = self.cleaned_data.get(
+            "hbA1c_level"
+        )
+
+
+        if value is None:
+
+            raise forms.ValidationError(
+                "HbA1c level is required."
+            )
+
+
+        if value <= 0:
+
+            raise forms.ValidationError(
+                "Enter a valid HbA1c value."
+            )
+
+
+        return value
+
+
+
+    # -----------------------------------
+    # Blood glucose validation
+    # -----------------------------------
+
+    def clean_blood_glucose_level(self):
+
+        value = self.cleaned_data.get(
+            "blood_glucose_level"
+        )
+
+
+        if value is None:
+
+            raise forms.ValidationError(
+                "Blood glucose is required."
+            )
+
+
+        if value <= 0:
+
             raise forms.ValidationError(
                 "Enter a valid glucose value."
             )
 
-        return glucose
+
+        return value
 
 
-    def clean_blood_pressure(self):
 
-        bp = self.cleaned_data.get("blood_pressure")
+    # -----------------------------------
+    # Dropdown validation
+    # -----------------------------------
 
-        if bp is None:
-            raise forms.ValidationError(
-                "Blood pressure is required."
-            )
+    def clean(self):
 
-        if bp <= 0:
-            raise forms.ValidationError(
-                "Enter a valid blood pressure value."
-            )
+        cleaned_data = super().clean()
 
-        return bp
+
+        select_fields = [
+            "gender",
+            "race",
+            "hypertension",
+            "heart_disease",
+            "smoking_history",
+        ]
+
+
+        for field in select_fields:
+
+            value = cleaned_data.get(field)
+
+
+            # IMPORTANT:
+            # Do not use "if not value"
+            # because 0 = No is valid
+
+            if value is None or value == "":
+
+                self.add_error(
+                    field,
+                    "Please select an option."
+                )
+
+
+        return cleaned_data

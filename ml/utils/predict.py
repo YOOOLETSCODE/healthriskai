@@ -2,62 +2,76 @@ import os
 import joblib
 import pandas as pd
 
-# Base directory
+
+# ml/utils/predict.py
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-# Model path
+
 MODEL_PATH = os.path.join(
     BASE_DIR,
     "trained_models",
-    "diabetes_model.pkl"
+    "diabetes_xgb_model.pkl"
 )
 
-# Features expected by the model
-FEATURES = [
-    "Pregnancies",
-    "Glucose",
-    "BloodPressure",
-    "SkinThickness",
-    "Insulin",
-    "BMI",
-    "DiabetesPedigreeFunction",
-    "Age",
-]
+FEATURE_PATH = os.path.join(
+    BASE_DIR,
+    "trained_models",
+    "feature_names.pkl"
+)
 
-# Load trained model
+
+# Load model and feature order
 model = joblib.load(MODEL_PATH)
+FEATURES = joblib.load(FEATURE_PATH)
+
 
 
 def predict_diabetes(data):
     """
-    Predict diabetes and return:
-    - prediction (0 or 1)
-    - result (Diabetic / Non-Diabetic)
-    - confidence (confidence of the predicted class)
+    Predict diabetes risk using XGBoost model.
+
+    Returns:
+    - prediction
+    - result
+    - confidence
     - diabetic_probability
     - non_diabetic_probability
     """
 
-    # Convert input into DataFrame
-    patient = pd.DataFrame([data], columns=FEATURES)
+    # Create dataframe using training feature order
+    patient = pd.DataFrame([data])
+    patient = patient[FEATURES]
 
-    # Predict class
-    prediction = int(model.predict(patient)[0])
 
-    # Get probabilities
+    # Prediction
+    prediction = int(
+        model.predict(patient)[0]
+    )
+
+
+    # Probability
     probabilities = model.predict_proba(patient)[0]
 
-    # Assuming model.classes_ == [0, 1]
-    non_diabetic_probability = round(float(probabilities[0] * 100), 2)
-    diabetic_probability = round(float(probabilities[1] * 100), 2)
 
-    # Human-readable result
+    non_diabetic_probability = round(
+        float(probabilities[0] * 100),
+        2
+    )
+
+    diabetic_probability = round(
+        float(probabilities[1] * 100),
+        2
+    )
+
+
     if prediction == 1:
-        result = "Diabetic"
+        result = "High Diabetes Risk"
         confidence = diabetic_probability
+
     else:
-        result = "Non-Diabetic"
+        result = "Low Diabetes Risk"
         confidence = non_diabetic_probability
+
 
     return {
         "prediction": prediction,

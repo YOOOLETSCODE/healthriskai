@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+
 from patients.models import HealthRecord
+
 
 
 @login_required
@@ -10,13 +12,16 @@ def dashboard(request):
         user=request.user
     ).order_by("-created_at")
 
+
     latest_record = records.first()
+
 
     context = {
         "records": records,
         "latest": latest_record,
         "total": records.count(),
     }
+
 
     return render(
         request,
@@ -25,12 +30,16 @@ def dashboard(request):
     )
 
 
+
+
+
 @login_required
 def ai_assistant(request):
 
     latest_record = HealthRecord.objects.filter(
         user=request.user
     ).order_by("-created_at").first()
+
 
 
     if not latest_record:
@@ -44,72 +53,135 @@ def ai_assistant(request):
         )
 
 
+
     risk_factors = []
+
     analysis = []
+
     recommendations = []
 
 
-    # -----------------------------
-    # Glucose
-    # -----------------------------
 
-    if latest_record.glucose >= 140:
+    # ---------------------------------
+    # Blood Glucose
+    # ---------------------------------
+
+    if latest_record.blood_glucose_level >= 140:
+
 
         risk_factors.append(
             "🔴 High Blood Glucose"
         )
 
+
         analysis.append(
             "Your blood glucose level is above the normal range, which is one of the strongest indicators of diabetes risk."
         )
 
+
         recommendations.append(
-            "Reduce sugary foods and drinks and consult a healthcare provider for further evaluation."
+            "Monitor glucose levels and reduce excessive sugar intake."
         )
+
 
     else:
 
+
         analysis.append(
-            "Your blood glucose level is within the normal range."
+            "Your blood glucose level is within the expected range."
         )
 
 
 
-    # -----------------------------
+
+
+    # ---------------------------------
+    # HbA1c
+    # ---------------------------------
+
+    if latest_record.hbA1c_level >= 6.5:
+
+
+        risk_factors.append(
+            "🔴 High HbA1c Level"
+        )
+
+
+        analysis.append(
+            "Your HbA1c level indicates increased average blood sugar over recent months."
+        )
+
+
+        recommendations.append(
+            "Consult a healthcare provider for diabetes evaluation."
+        )
+
+
+
+    elif latest_record.hbA1c_level >= 5.7:
+
+
+        risk_factors.append(
+            "🟡 Elevated HbA1c"
+        )
+
+
+        analysis.append(
+            "Your HbA1c level is above the normal range."
+        )
+
+
+        recommendations.append(
+            "Maintain a balanced diet and regular activity."
+        )
+
+
+
+
+
+    # ---------------------------------
     # BMI
-    # -----------------------------
+    # ---------------------------------
 
     if latest_record.bmi >= 30:
+
 
         risk_factors.append(
             "🟡 High BMI"
         )
 
+
         analysis.append(
             "Your BMI indicates obesity, which may increase diabetes risk."
         )
 
+
         recommendations.append(
-            "Exercise regularly and maintain a healthy diet."
+            "Focus on healthy weight management through diet and exercise."
         )
 
 
+
     elif latest_record.bmi >= 25:
+
 
         risk_factors.append(
             "🟡 Overweight"
         )
 
+
         analysis.append(
             "Your BMI is above the healthy range."
         )
 
+
         recommendations.append(
-            "Try maintaining a healthy weight."
+            "Maintaining a healthy weight can reduce diabetes risk."
         )
 
 
     else:
+
 
         analysis.append(
             "Your BMI is within the healthy range."
@@ -117,130 +189,103 @@ def ai_assistant(request):
 
 
 
-    # -----------------------------
-    # Blood Pressure
-    # -----------------------------
-
-    try:
-
-        systolic_bp = int(
-            latest_record.blood_pressure.split("/")[0]
-        )
-
-    except:
-
-        systolic_bp = 120
 
 
+    # ---------------------------------
+    # Hypertension
+    # ---------------------------------
 
-    if systolic_bp >= 130:
+    if latest_record.hypertension == 1:
+
 
         risk_factors.append(
-            "🟠 High Blood Pressure"
+            "🟠 Hypertension"
         )
+
 
         analysis.append(
-            "Your blood pressure is elevated, which may increase overall health risks."
+            "High blood pressure can increase the risk of diabetes-related complications."
         )
 
+
         recommendations.append(
-            "Monitor your blood pressure and consult a healthcare provider."
+            "Monitor blood pressure regularly."
         )
 
 
     else:
 
+
         analysis.append(
-            "Your blood pressure is within the normal range."
+            "No hypertension risk was reported."
         )
 
 
 
-    # -----------------------------
-    # Family History
-    # -----------------------------
 
-    if latest_record.family_history == "Yes":
+
+    # ---------------------------------
+    # Heart Disease
+    # ---------------------------------
+
+    if latest_record.heart_disease == 1:
+
 
         risk_factors.append(
-            "🧬 Family History"
+            "❤️ Heart Disease History"
         )
+
 
         analysis.append(
-            "Having a family history of diabetes increases your risk."
+            "A history of heart disease is associated with higher metabolic risk."
         )
+
 
         recommendations.append(
-            "Routine diabetes screening is recommended."
+            "Regular medical checkups are recommended."
         )
 
 
 
-    # -----------------------------
+
+
+    # ---------------------------------
     # Smoking
-    # -----------------------------
+    # ---------------------------------
 
-    if latest_record.smoking == "Yes":
+    if latest_record.smoking_history in [
+        "current",
+        "ever",
+        "former"
+    ]:
+
 
         risk_factors.append(
-            "🚬 Smoking"
+            "🚬 Smoking History"
         )
+
 
         analysis.append(
-            "Smoking increases the risk of diabetes and other chronic diseases."
+            "Smoking history can increase diabetes and cardiovascular risk."
         )
+
 
         recommendations.append(
-            "Consider quitting smoking."
+            "Avoid smoking and consider cessation support."
         )
 
 
 
-    # -----------------------------
-    # Exercise
-    # -----------------------------
-
-    if latest_record.exercise == "Low":
-
-        risk_factors.append(
-            "🏃 Low Physical Activity"
-        )
-
-        analysis.append(
-            "Low physical activity can contribute to diabetes and cardiovascular disease."
-        )
-
-        recommendations.append(
-            "Aim for at least 30 minutes of exercise on most days."
-        )
 
 
-
-    # -----------------------------
-    # Sleep
-    # -----------------------------
-
-    if latest_record.sleep < 7:
-
-        analysis.append(
-            "Sleeping less than 7 hours may affect blood sugar regulation."
-        )
-
-        recommendations.append(
-            "Aim for 7–9 hours of quality sleep every night."
-        )
-
-
-
-    # -----------------------------
-    # AI Risk Level
-    # Uses diabetic probability
-    # NOT confidence
-    # -----------------------------
+    # ---------------------------------
+    # AI Probability Risk
+    # ---------------------------------
 
     diabetic_probability = (
         latest_record.diabetic_probability
     )
+
 
 
     if diabetic_probability >= 80:
@@ -248,9 +293,11 @@ def ai_assistant(request):
         risk_level = "🔴 High"
 
 
+
     elif diabetic_probability >= 50:
 
         risk_level = "🟡 Moderate"
+
 
 
     else:
@@ -259,9 +306,7 @@ def ai_assistant(request):
 
 
 
-    # -----------------------------
-    # AI Summary
-    # -----------------------------
+
 
     clean_risk = (
         risk_level
@@ -272,15 +317,18 @@ def ai_assistant(request):
     )
 
 
+
+
+
     summary = (
 
         f"I analyzed your latest health assessment and identified "
-        f"{len(risk_factors)} major risk factor(s). "
+        f"{len(risk_factors)} risk factor(s). "
 
         f"Your AI prediction is "
         f"{latest_record.diabetes_prediction}. "
 
-        f"Based on your health information, your diabetes risk level is "
+        f"Your estimated diabetes risk level is "
         f"{clean_risk}. "
 
         f"The estimated diabetes probability is "
@@ -290,29 +338,28 @@ def ai_assistant(request):
 
 
 
-    # -----------------------------
-    # Disclaimer
-    # -----------------------------
+
 
     disclaimer = (
 
         "This analysis is generated by HealthRisk AI and is intended "
-        "for educational purposes only. It should not replace professional "
+        "for educational purposes only. It does not replace professional "
         "medical advice or diagnosis."
 
     )
 
 
 
-    # -----------------------------
-    # Positive Message
-    # -----------------------------
+
 
     if len(risk_factors) == 0:
 
+
         analysis.append(
-            "Great job! No major diabetes risk factors were identified in your assessment."
+            "Great job! No major diabetes risk factors were identified."
         )
+
+
 
 
 
@@ -333,6 +380,8 @@ def ai_assistant(request):
         "disclaimer": disclaimer,
 
     }
+
+
 
 
 

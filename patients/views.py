@@ -1,133 +1,129 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-
 from .forms import HealthRecordForm
 from .models import HealthRecord
-
 from ml.utils.predict import predict_diabetes
-
 
 @login_required
 def new_assessment(request):
 
-    form = HealthRecordForm()
 
     if request.method == "POST":
 
+
         form = HealthRecordForm(request.POST)
+
+
 
         if form.is_valid():
 
-            assessment = form.save(commit=False)
+
+            assessment = form.save(
+                commit=False
+            )
+
 
             assessment.user = request.user
 
 
-            # -----------------------------
-            # Calculate BMI
-            # -----------------------------
-            height_m = assessment.height / 100
 
-            assessment.bmi = round(
-                assessment.weight / (height_m ** 2),
-                2
+            patient_data = {
+
+
+
+                "age":
+                    assessment.age,
+
+
+
+                "race:AfricanAmerican":
+                    1 if assessment.race=="AfricanAmerican" else 0,
+
+
+                "race:Asian":
+                    1 if assessment.race=="Asian" else 0,
+
+
+                "race:Caucasian":
+                    1 if assessment.race=="Caucasian" else 0,
+
+
+                "race:Hispanic":
+                    1 if assessment.race=="Hispanic" else 0,
+
+
+                "race:Other":
+                    1 if assessment.race=="Other" else 0,
+
+
+
+                "hypertension":
+                    assessment.hypertension,
+
+
+
+                "heart_disease":
+                    assessment.heart_disease,
+
+
+
+                "bmi":
+                    assessment.bmi,
+
+
+
+                "hbA1c_level":
+                    assessment.hbA1c_level,
+
+
+
+                "blood_glucose_level":
+                    assessment.blood_glucose_level,
+
+
+
+                "gender_Female":
+                    1 if assessment.gender=="Female" else 0,
+
+
+                "gender_Male":
+                    1 if assessment.gender=="Male" else 0,
+
+
+
+                "smoking_history_No Info":
+                    1 if assessment.smoking_history=="No Info" else 0,
+
+
+                "smoking_history_current":
+                    1 if assessment.smoking_history=="current" else 0,
+
+
+                "smoking_history_ever":
+                    1 if assessment.smoking_history=="ever" else 0,
+
+
+                "smoking_history_former":
+                    1 if assessment.smoking_history=="former" else 0,
+
+
+                "smoking_history_never":
+                    1 if assessment.smoking_history=="never" else 0,
+
+
+                "smoking_history_not current":
+                    1 if assessment.smoking_history=="not current" else 0,
+
+            }
+
+
+
+            result = predict_diabetes(
+                patient_data
             )
 
 
-            # -----------------------------
-            # Convert Blood Pressure
-            # Example: 120/80 -> 120
-            # -----------------------------
-            try:
-
-                systolic_bp = int(
-                    assessment.blood_pressure.split("/")[0]
-                )
-
-            except:
-
-                systolic_bp = 120
-            # -----------------------------
-            # Estimated clinical values
-            # From Pima Diabetes Dataset
-            # -----------------------------
-            skin_thickness = 20
-
-            insulin = 125
-
-
-
-            # -----------------------------
-            # Family History Conversion
-            # Diabetes Pedigree Estimate
-            # -----------------------------
-            if assessment.family_history == "Yes":
-
-                diabetes_pedigree = 0.8
-
-            else:
-
-                diabetes_pedigree = 0.3
-
-
-
-            # -----------------------------
-            # Pregnancy Handling
-            # Male users do not have pregnancy data.
-            # ML model requires this value,
-            # so male users get 0.
-            # -----------------------------
-            if assessment.gender == "Male":
-
-                pregnancies = 0
-
-            else:
-
-                pregnancies = assessment.pregnancies or 0
-            # -----------------------------
-            # Prepare ML Input
-            # Order must match model:
-            #
-            # Pregnancies
-            # Glucose
-            # BloodPressure
-            # SkinThickness
-            # Insulin
-            # BMI
-            # DiabetesPedigreeFunction
-            # Age
-            # -----------------------------
-
-            patient_data = [
-
-                pregnancies,
-
-                assessment.glucose,
-
-                systolic_bp,
-
-                skin_thickness,
-
-                insulin,
-
-                assessment.bmi,
-
-                diabetes_pedigree,
-
-                assessment.age,
-
-            ]
-            # -----------------------------
-            # AI Prediction
-            # -----------------------------
-            result = predict_diabetes(patient_data)
-
-
-
-            # -----------------------------
-            # Save AI Results
-            # -----------------------------
 
             assessment.diabetes_prediction = (
                 result["result"]
@@ -150,7 +146,6 @@ def new_assessment(request):
 
 
 
-            # Save record
             assessment.save()
 
 
@@ -161,11 +156,17 @@ def new_assessment(request):
 
 
 
+    else:
+
+        form = HealthRecordForm()
+
+
+
     return render(
         request,
         "patients/new_assessment.html",
         {
-            "form": form
+            "form":form
         }
     )
 
@@ -251,7 +252,9 @@ def assessment_result(request, id):
     return render(
         request,
         "patients/assessment_result.html",
-        {"record": record}
+        {
+            "record": record
+        }
     )
 
 
@@ -260,5 +263,11 @@ def assessment_result(request, id):
 def processing(request):
 
     return render(
-        request,"patients/processing.html",{"redirect_url": reverse("dashboard:ai_assistant")}
+        request,
+        "patients/processing.html",
+        {
+            "redirect_url": reverse(
+                "dashboard:ai_assistant"
+            )
+        }
     )

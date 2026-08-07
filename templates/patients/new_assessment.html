@@ -4,231 +4,252 @@
 
 <div class="container mt-5">
 
-    <div class="card shadow-lg">
+<div class="card shadow-lg">
 
-        <div class="card-header bg-primary text-white text-center">
+<div class="card-header bg-primary text-white text-center">
 
-            <h3>
-                🩺 New Health Assessment
-            </h3>
+<h3>
+🩺 New Health Assessment
+</h3>
 
-            <p class="mb-0">
-                Enter your health information for AI diabetes risk analysis
-            </p>
+<p class="mb-0">
+Enter your health information for AI diabetes risk analysis
+</p>
 
-        </div>
-
-
-        <div class="card-body">
-
-
-            <form method="POST" novalidate>
-
-                {% csrf_token %}
-
-
-                <!-- General Form Errors -->
-
-                {% if form.non_field_errors %}
-
-                <div class="alert alert-danger">
-
-                    {% for error in form.non_field_errors %}
-
-                        {{ error }}
-                    {% endfor %}
-                </div>
-                {% endif %}
-                <div class="row">
-                    <!-- Age -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Age
-                        </label>
-                        {{ form.age }}
-                        {% for error in form.age.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Gender -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Gender
-                        </label>
-                        {{ form.gender }}
-                        {% for error in form.gender.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Height -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Height (cm)
-                        </label>
-                        {{ form.height }}
-                        {% for error in form.height.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Weight -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Weight (kg)
-                        </label>
-                        {{ form.weight }}
-                        {% for error in form.weight.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Blood Pressure -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Blood Pressure
-                        </label>
-                        {{ form.blood_pressure }}
-                        {% for error in form.blood_pressure.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Glucose -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Glucose Level
-                        </label>
-                        {{ form.glucose }}
-                        {% for error in form.glucose.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Cholesterol -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Cholesterol
-                        </label>
-                        {{ form.cholesterol }}
-                        {% for error in form.cholesterol.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Sleep -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Sleep Hours
-                        </label>
-                        {{ form.sleep }}
-                        {% for error in form.sleep.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Smoking -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Smoking
-                        </label>
-                        {{ form.smoking }}
-                        {% for error in form.smoking.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Exercise -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Exercise Level
-                        </label>
-                        {{ form.exercise }}
-                        {% for error in form.exercise.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Alcohol -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Alcohol Consumption
-                        </label>
-                        {{ form.alcohol }}
-                        {% for error in form.alcohol.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Family History -->
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">
-                            Family History of Diabetes
-                        </label>
-                        {{ form.family_history }}
-                        {% for error in form.family_history.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <!-- Pregnancy -->
-                    <div 
-                    class="col-md-6 mb-3"
-                    id="pregnancy-field">
-                        <label class="form-label">
-                            Number of Pregnancies
-                        </label>
-                        {{ form.pregnancies }}
-                        {% for error in form.pregnancies.errors %}
-                        <div class="text-danger small">
-                            {{ error }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-success btn-lg px-5">
-                        Analyze Health Risk
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
-<script>
-document.addEventListener(
-"DOMContentLoaded",
-function(){
-    const gender =document.getElementById("id_gender");
-    const pregnancyField =document.getElementById("pregnancy-field");
-    const pregnancyInput =document.getElementById("id_pregnancies");
-    function togglePregnancy(){
-        if(gender.value === "Male"){
-            pregnancyField.style.display = "none";
-            pregnancyInput.value = 0;
-        }
-        else{
-            pregnancyField.style.display = "block";
-        }
-    }
-    togglePregnancy();
-    gender.addEventListener(
-        "change",
-        togglePregnancy
-    );
-});
-</script>
+
+
+<div class="card-body">
+
+
+<form method="POST" novalidate>
+
+{% csrf_token %}
+
+
+{% if form.non_field_errors %}
+
+<div class="alert alert-danger">
+
+{% for error in form.non_field_errors %}
+
+{{ error }}
+
+{% endfor %}
+
+</div>
+
+{% endif %}
+
+
+
+<div class="row">
+
+
+<!-- Age -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Age
+</label>
+
+{{ form.age }}
+
+{% for error in form.age.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Gender -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Gender
+</label>
+
+{{ form.gender }}
+
+{% for error in form.gender.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Race -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Race
+</label>
+
+{{ form.race }}
+
+{% for error in form.race.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- BMI -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+BMI
+</label>
+
+{{ form.bmi }}
+
+{% for error in form.bmi.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- HbA1c -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+HbA1c Level (%)
+</label>
+
+{{ form.hbA1c_level }}
+
+{% for error in form.hbA1c_level.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Blood Glucose -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Blood Glucose Level (mg/dL)
+</label>
+
+{{ form.blood_glucose_level }}
+
+{% for error in form.blood_glucose_level.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Hypertension -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Hypertension
+</label>
+
+{{ form.hypertension }}
+
+{% for error in form.hypertension.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Heart Disease -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Heart Disease
+</label>
+
+{{ form.heart_disease }}
+
+{% for error in form.heart_disease.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+
+<!-- Smoking -->
+<div class="col-md-6 mb-3">
+
+<label class="form-label">
+Smoking History
+</label>
+
+{{ form.smoking_history }}
+
+{% for error in form.smoking_history.errors %}
+<div class="text-danger small">
+{{ error }}
+</div>
+{% endfor %}
+
+</div>
+
+
+
+</div>
+
+
+
+<div class="text-center mt-4">
+
+<button 
+type="submit"
+class="btn btn-success btn-lg px-5">
+
+Analyze Health Risk
+
+</button>
+
+</div>
+
+
+</form>
+
+
+</div>
+
+</div>
+
+</div>
+
+
 {% endblock %}
