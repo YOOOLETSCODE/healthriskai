@@ -21,7 +21,7 @@ def signup(request):
 
         if user_detail.is_valid():
             user_detail.save()
-            return redirect('/accounts/login/')
+            return redirect('accounts:login')
     return render(request,'registration/signup.html',{'form':user_detail})
 
 def loginuser(request):
@@ -63,15 +63,29 @@ def loginuser(request):
 
 @login_required
 def profile(request):
-    records = HealthRecord.objects.filter(user=request.user).order_by('-created_at')
-    latest = records.first() 
+
+    records = HealthRecord.objects.filter(
+        user=request.user
+    ).order_by('-created_at')
+
+    latest = records.first()
+
     context = {
-        'latest': latest,
-        'total': records.count()
+        "latest": latest,
+        "total": records.count()
     }
-    return render(request, 'accounts/profile.html', context)
+
+    return render(
+        request,
+        "accounts/profile.html",
+        context
+    )
+
 
 @login_required
 def logoutuser(request):
+
     logout(request)
-    return redirect('/accounts/login/')
+
+    return redirect("accounts:login")
+
