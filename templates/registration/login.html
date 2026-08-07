@@ -70,15 +70,14 @@
             </button>
 
         </form>
-        <p class="forgot-password">
-            <a href="{% url 'password_reset' %}">Forgot Password?</a>
-        </p>
+        <a href="{% url 'password_reset' %}" class="forgot-password">
+            Forgot Password?
 
         <p class="bottom-text">
 
             Don't have an account?
 
-            <a href="{% url 'accounts:signup' %}">
+            <a href="{% url 'signup' %}">
                 Sign Up
             </a>
 

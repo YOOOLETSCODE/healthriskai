@@ -110,9 +110,11 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "binirana73@gmail.com"
-EMAIL_HOST_PASSWORD = "uohr hqwr bqea joyq"
+EMAIL_HOST_PASSWORD = "oygg cqti aavx rbsw"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_SUBJECT_PREFIX = "[HealthRiskAI] "
+EMAIL_TIMEOUT = 10
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
@@ -133,9 +135,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static',]
 AUTH_USER_MODEL = 'accounts.User'
 
-# LOGIN_REDIRECT_URL = "accounts:profile"
 
-# LOGOUT_REDIRECT_URL = "accounts:login"
-
-# LOGIN_URL = "accounts:login"
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "dashboard"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
