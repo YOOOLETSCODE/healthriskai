@@ -4,20 +4,20 @@
 {% block content %}
 
 <div class="welcome">
-    <h2>Welcome Back, {{ user.first_name }} 👋</h2>
+    <h2>Welcome Back, {{ user.first_name|default:user.username }} 👋</h2>
     <p>Here's your latest health summary.</p>
 </div>
 
-<div class="row">
+<div class="dashboard-row">
 
-    <div class="col-md-4">
+    <div class="dashboard-col">
         <div class="dashboard-card">
             <h5>Total Assessments</h5>
-            <h2>{{ total }}</h2>
+            <h2>{{ total|default:0 }}</h2>
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="dashboard-col">
         <div class="dashboard-card">
             <h5>Latest BMI</h5>
             {% if latest %}
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="dashboard-col">
         <div class="dashboard-card">
             <h5>Latest Blood Glucose</h5>
             {% if latest %}

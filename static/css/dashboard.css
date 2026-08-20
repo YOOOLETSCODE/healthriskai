@@ -1,99 +1,122 @@
-/* Page */
-body{
-    background:#f5f7fa;
-    font-family:Arial, Helvetica, sans-serif;
+/* Page Background & Reset */
+body {
+    background-color: #f5f7fa !important;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Welcome */
-.welcome{
-    margin-bottom:30px;
+/* Container Safety Rules */
+.col-md-10 {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 83.333333% !important; /* Forces Bootstrap col-md-10 width */
+    min-height: 100vh;
 }
 
-.welcome h2{
-    margin:0;
-    font-weight:700;
+/* Welcome Section */
+.welcome {
+    margin-bottom: 30px;
+    display: block !important;
 }
 
-.welcome p{
-    color:gray;
-    margin-top:5px;
+.welcome h2 {
+    margin: 0;
+    font-weight: 700;
+    color: #1e293b;
 }
 
-/* Cards */
-
-.dashboard-card{
-    background:white;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    margin-bottom:20px;
+.welcome p {
+    color: #64748b;
+    margin-top: 5px;
 }
 
-.dashboard-card h5{
-    color:#666;
-    margin-bottom:10px;
+/* Dashboard Cards Grid */
+.dashboard-row {
+    display: flex !important;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    width: 100%;
 }
 
-.dashboard-card h2{
-    color:#2563eb;
-    margin:0;
+.dashboard-col {
+    flex: 1;
+    min-width: 240px;
 }
 
-/* Table */
-
-.activity-card{
-    background:white;
-    border-radius:12px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-    padding:20px;
+.dashboard-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
 }
 
-.activity-card h4{
-    margin-bottom:20px;
+.dashboard-card h5 {
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
+.dashboard-card h2 {
+    color: #2563eb;
+    margin: 0;
+    font-weight: 700;
 }
 
-table th{
-    background:#2563eb;
-    color:white;
-    padding:12px;
+.dashboard-card small {
+    display: block;
+    margin-top: 8px;
+    color: #2563eb;
+    font-weight: 600;
 }
 
-table td{
-    padding:12px;
-    border-bottom:1px solid #ddd;
+/* Activity Table Card */
+.activity-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+    width: 100%;
 }
 
-table tr:hover{
-    background:#f2f7ff;
-}
-.row{
-    display:flex;
-    gap:20px;
-    flex-wrap:wrap;
-    margin-bottom:25px;
+.activity-card h4 {
+    margin-bottom: 20px;
+    color: #1e293b;
+    font-weight: 700;
 }
 
-.col-md-4{
-    flex:1;
-    min-width:250px;
+/* Table Styles */
+.activity-card table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.dashboard-card small{
-    display:block;
-    margin-top:8px;
-    color:#2563eb;
-    font-weight:600;
+.activity-card table th {
+    background: #2563eb;
+    color: #ffffff;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
 }
 
-.activity-card table td small{
-    display:block;
-    margin-top:4px;
-    color:#2563eb;
-    font-size:12px;
-    font-weight:600;
+.activity-card table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.activity-card table tr:hover {
+    background: #f8fafc;
+}
+
+.activity-card table td small {
+    display: block;
+    margin-top: 4px;
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: 600;
 }

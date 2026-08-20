@@ -1,91 +1,82 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
-from patients.models import HealthRecord
-from .forms import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 
+from patients.models import HealthRecord
+from .forms import SignupForm
+
 User = get_user_model()
 
-# Create your views here.
-def signup(request):
-    user_detail = SignupForm()
-    print(user_detail)
-    if request.method == 'POST':
-        user_detail = SignupForm(request.POST)
-        print(user_detail)
 
-        if user_detail.is_valid():
-            user_detail.save()
-            return redirect('accounts:login')
-    return render(request,'registration/signup.html',{'form':user_detail})
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            # Intercept save to properly hash raw password
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            messages.success(request, "Account created successfully. Please log in.")
+            return redirect('login')
+    else:
+        form = SignupForm()
+
+    return render(request, 'registration/signup.html', {'form': form})
+
 
 def loginuser(request):
+    if request.user.is_authenticated:
+        return redirect('/dashboard/')
 
-    if request.method == "POST":
+    if request.method == 'POST':
+        # Safely capture either email or username form inputs
+        email_or_username = request.POST.get('email') or request.POST.get('username')
+        password = request.POST.get('password')
 
-        email = request.POST.get("email")
-        password = request.POST.get("password")
-
+        # Find user by case-insensitive email lookup
         try:
-            user = User.objects.get(email=email)
-
+            user_obj = User.objects.get(email__iexact=email_or_username)
         except User.DoesNotExist:
-            user = None
+            # Fallback to checking username if email wasn't found
+            user_obj = User.objects.filter(username__iexact=email_or_username).first()
 
-        if user is not None:
-
+        if user_obj is not None:
+            # Authenticate using the matched user's username
             authenticated_user = authenticate(
                 request,
-                username=user.username,
-                password=password,
+                username=user_obj.username,
+                password=password
             )
 
-            if authenticated_user:
-
+            if authenticated_user is not None:
                 login(request, authenticated_user)
+                
+                # Check for 'next' parameter in redirect URL or default to dashboard
+                next_url = request.GET.get('next') or request.POST.get('next')
+                return redirect(next_url if next_url else '/dashboard/')
 
-                return redirect("/dashboard/")
+        messages.error(request, "Invalid email/username or password.")
 
-        messages.error(
-            request,
-            "Invalid email or password."
-        )
+    return render(request, 'registration/login.html')
 
-    return render(
-        request,
-        "registration/login.html"
-    )
 
 @login_required
 def profile(request):
-
-    records = HealthRecord.objects.filter(
-        user=request.user
-    ).order_by('-created_at')
-
+    records = HealthRecord.objects.filter(user=request.user).order_by('-created_at')
     latest = records.first()
 
     context = {
-        "latest": latest,
-        "total": records.count()
+        'latest': latest,
+        'total': records.count()
     }
 
-    return render(
-        request,
-        "accounts/profile.html",
-        context
-    )
+    return render(request, 'accounts/profile.html', context)
 
 
 @login_required
 def logoutuser(request):
-
     logout(request)
-
-    return redirect("accounts:login")
-
+    messages.info(request, "You have been logged out.")
+    return redirect('login')
